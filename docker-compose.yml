@@ -1,0 +1,32 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: '3.1'
+services:
+    postgres:
+        image: 'postgres:11.1-alpine'
+        working_dir: /application
+        volumes:
+            - '.:/application'
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=root
+            - POSTGRES_DB=yellow-media-test
+        ports:
+            - '19001:5432'
+
+    webserver:
+        image: 'nginx:alpine'
+        working_dir: /application
+        volumes:
+            - '.:/application'
+            - './phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
+        ports:
+            - '19000:80'
+
+    php-fpm:
+        build: phpdocker/php-fpm
+        working_dir: /application
+        volumes:
+            - '.:/application'
+            - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini'
