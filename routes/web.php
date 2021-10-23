@@ -13,6 +13,7 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/recover-password/{token}', [
+    'as' => 'password.reset',
+    'uses' => 'Auth\ResetPasswordController@reset'
+]);
