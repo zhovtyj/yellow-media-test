@@ -19,6 +19,6 @@ class RegisterController extends Controller
 
         $user = User::create($validated);
 
-        return response()->json($user);
+        return response()->json($user, 201);
     }
 }
